@@ -6,5 +6,9 @@ export default defineConfig({
   server: {
     port: 5173,
     host: true
+  },
+  preview: {
+    host: true,
+    allowedHosts: ["code-server.synawave.ai"]
   }
 });
