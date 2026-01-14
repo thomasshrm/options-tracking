@@ -1,0 +1,30 @@
+CREATE TABLE IF NOT EXISTS users (
+  id SERIAL PRIMARY KEY,
+  email VARCHAR(255) UNIQUE NOT NULL,
+  username VARCHAR(255) NOT NULL,
+  password_hash VARCHAR(255) NOT NULL,
+  role VARCHAR(50) NOT NULL DEFAULT 'user',
+  is_active BOOLEAN NOT NULL DEFAULT TRUE,
+  created_at TIMESTAMP NOT NULL DEFAULT NOW(),
+  updated_at TIMESTAMP NOT NULL DEFAULT NOW()
+);
+
+CREATE TABLE IF NOT EXISTS positions (
+  id SERIAL PRIMARY KEY,
+  user_id INTEGER NOT NULL REFERENCES users(id) ON DELETE CASCADE,
+  symbol VARCHAR(12) NOT NULL,
+  position_type VARCHAR(50) NOT NULL,
+  direction VARCHAR(10) NOT NULL,
+  strike_price NUMERIC(12, 2) NOT NULL,
+  premium NUMERIC(12, 2) NOT NULL,
+  quantity INTEGER NOT NULL,
+  expiration_date DATE NOT NULL,
+  open_date DATE NOT NULL,
+  close_date DATE,
+  status VARCHAR(20) NOT NULL DEFAULT 'OPEN',
+  pnl_realized NUMERIC(12, 2) NOT NULL DEFAULT 0,
+  pnl_unrealized NUMERIC(12, 2) NOT NULL DEFAULT 0,
+  deleted_at TIMESTAMP,
+  created_at TIMESTAMP NOT NULL DEFAULT NOW(),
+  updated_at TIMESTAMP NOT NULL DEFAULT NOW()
+);
